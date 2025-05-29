@@ -22,7 +22,11 @@ async function scrapeSWOTNumbers() {
       await page.setViewport({ width: 1400, height: 900 });
 
       try {
-        await page.goto(company.url, { waitUntil: 'networkidle2', timeout: 65000 });
+        const success = await safeGoto(page, company.url);
+        if (!success) {
+          console.error(`Skipping ${company.name} after multiple attempts.`);
+          continue;
+        }
 
         // Close pop-ups when website loads fully
         for (let i = 0; i < 3; i++) {
@@ -77,6 +81,19 @@ async function scrapeSWOTNumbers() {
     console.error('Global error:', error.message);
   } finally {
     await browser.close();
+  }
+}
+
+async function safeGoto(page, url, maxRetries = 2) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: 'load', timeout: 90000 });
+      return true;
+    } catch (err) {
+      console.log(`Attempt ${attempt} failed for ${url}: ${err.message}`);
+      if (attempt === maxRetries) return false;
+      await delay(5000); // wait before retry
+    }
   }
 }
 

@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const companies = require('./utils/companies');
 const closeMoneyControlPopups = require('./utils/popupHandler');
-const { insertSheetData } = require('./utils/sheets');
 require('dotenv').config();
+const { insertExcelData } = require('./utils/excelWriter');
 
 async function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -65,7 +65,8 @@ async function scrapeSWOTNumbers() {
 
         console.log(`${company.name}:`, result);
 
-        await insertSheetData(company.name, result);
+        // await insertSheetData(company.name, result);
+        insertExcelData(company.name, result);
 
       } catch (error) {
         console.error(`Error processing ${company.name}:`, error.message);

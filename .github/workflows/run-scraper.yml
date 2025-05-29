@@ -27,4 +27,4 @@ jobs:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
         run: |
           echo "$GOOGLE_CREDENTIALS_JSON" > credentials.json
-          node scrape.js
+          node scraper.js

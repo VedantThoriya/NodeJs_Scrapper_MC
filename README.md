@@ -1,4 +1,5 @@
 📊 MoneyControl SWOT Scraper
+
 This Node.js project scrapes SWOT data (Strengths, Weaknesses, Opportunities, Threats) and MC Essentials Score for multiple companies from MoneyControl.com and stores the results in a local Excel spreadsheet.
 
 ✅ Features

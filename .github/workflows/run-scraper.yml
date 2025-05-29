@@ -3,7 +3,7 @@ name: Run MoneyControl Scraper
 on:
   workflow_dispatch:    # Manual run
   schedule:
-    - cron: '10 13 * * *' # Optional: Runs every day at 6:40 PM IST
+    - cron: '0 6 * * *' # Optional: Runs every day at 6 AM UTC
 
 jobs:
   run-scraper:
@@ -27,4 +27,4 @@ jobs:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
         run: |
           echo "$GOOGLE_CREDENTIALS_JSON" > credentials.json
-          node scrape.js
+          node scraper.js
